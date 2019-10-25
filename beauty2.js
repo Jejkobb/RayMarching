@@ -103,23 +103,15 @@ function draw() {
     direction = getVectorFromAngle(a);
     radius = 0;
     for(var i = 0; i < iterations; i++){
-      radius = shortestDistToPoint(curPos);
+      radius += shortestDistToPoint(curPos);
       curPos = {
         x:curPos.x+direction.x*radius,
         y:curPos.y+direction.y*radius
       };
-      if(radius==0){
-        radius = distance({x:source.x-curPos.x, y:source.y-curPos.y});
+      if(curPos.x < 0 || curPos.x > width || curPos.y < 0 || curPos.y > height || radius <0){
         break;
       }
-      if(curPos.x < 0 || curPos.x > width || curPos.y < 0 || curPos.y > height){
-        radius = 1000;
-        break;
-      }else if(i == iterations-1){
-        radius = distance({x:source.x-curPos.x, y:source.y-curPos.y});
-        break;
-      }
+      drawLineInDirection(curPos, direction, radius);
     }
-    drawLineInDirection(source, direction, radius);
   }
 }
