@@ -36,12 +36,6 @@ function drawCircleAtPos(p, r){
   ellipse(p.x, p.y, 5);
 }
 
-function drawPointAtPos(p, r){
-  noStroke();
-  fill(220, 220, 220, 10);
-  ellipse(p.x, p.y, r);
-}
-
 function drawShapes(){
   for(var i = 0; i < boxes.length; i++){
     boxes[i].show();
@@ -99,7 +93,7 @@ function draw() {
   //drawLineInDirection(source, {x:mouseX, y:mouseY}, direction, 100);
   var curPos = source;
 
-  var example = false;
+  var example = true;
   if(example){
     iterations = 100;
     for(var i = 0; i < iterations; i++){
@@ -132,9 +126,6 @@ function draw() {
           x:curPos.x+direction.x*radius,
           y:curPos.y+direction.y*radius
         };
-        if(radius < 1){
-          drawPointAtPos(curPos, 1);
-        }
         if(radius==0){
           radius = distance({x:source.x-curPos.x, y:source.y-curPos.y});
           break;
@@ -147,6 +138,7 @@ function draw() {
           break;
         }
       }
+      drawLineInDirection(source, direction, radius);
     }
   }
 }
