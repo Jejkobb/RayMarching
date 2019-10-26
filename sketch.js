@@ -89,37 +89,56 @@ function draw() {
   // put drawing code here
   background(40);
   drawShapes();
-  //var direction = getDirection(source, {x:mouseX, y:mouseY});
+  var direction = getDirection(source, {x:mouseX, y:mouseY});
   //drawLineInDirection(source, {x:mouseX, y:mouseY}, direction, 100);
   var curPos = source;
 
-  source = {x:mouseX, y:mouseY};
-
-  iterations = 100;
-  var direction;
-  var radius;
-  for(var a = 0; a < 360; a++){
-    curPos = source;
-    direction = getVectorFromAngle(a);
-    radius = 0;
+  var example = false;
+  if(example){
+    iterations = 100;
     for(var i = 0; i < iterations; i++){
       radius = shortestDistToPoint(curPos);
+      drawLineInDirection(curPos, direction, radius);
+      if(radius>0){
+        drawCircleAtPos({x:curPos.x, y:curPos.y}, radius*2);
+      }
       curPos = {
         x:curPos.x+direction.x*radius,
         y:curPos.y+direction.y*radius
       };
-      if(radius==0){
-        radius = distance({x:source.x-curPos.x, y:source.y-curPos.y});
-        break;
-      }
       if(curPos.x < 0 || curPos.x > width || curPos.y < 0 || curPos.y > height){
         radius = 1000;
         break;
-      }else if(i == iterations-1){
-        radius = distance({x:source.x-curPos.x, y:source.y-curPos.y});
-        break;
       }
     }
-    drawLineInDirection(source, direction, radius);
+  }else{
+    source = {x:mouseX, y:mouseY};
+    iterations = 100;
+    var direction;
+    var radius;
+    for(var a = 0; a < 360; a+=0.5){
+      curPos = source;
+      direction = getVectorFromAngle(a);
+      radius = 0;
+      for(var i = 0; i < iterations; i++){
+        radius = shortestDistToPoint(curPos);
+        curPos = {
+          x:curPos.x+direction.x*radius,
+          y:curPos.y+direction.y*radius
+        };
+        if(radius==0){
+          radius = distance({x:source.x-curPos.x, y:source.y-curPos.y});
+          break;
+        }
+        if(curPos.x < 0 || curPos.x > width || curPos.y < 0 || curPos.y > height){
+          radius = 1000;
+          break;
+        }else if(i == iterations-1){
+          radius = distance({x:source.x-curPos.x, y:source.y-curPos.y});
+          break;
+        }
+      }
+      drawLineInDirection(source, direction, radius);
+    }
   }
 }
