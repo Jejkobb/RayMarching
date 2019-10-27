@@ -93,7 +93,7 @@ function draw() {
   //drawLineInDirection(source, {x:mouseX, y:mouseY}, direction, 100);
   var curPos = source;
 
-  var example = true;
+  var example = false;
   if(example){
     iterations = 100;
     for(var i = 0; i < iterations; i++){
@@ -112,7 +112,7 @@ function draw() {
       }
     }
   }else{
-    source = {x:mouseX, y:mouseY};
+    source = {x:400, y:390};
     iterations = 100;
     var direction;
     var radius;
